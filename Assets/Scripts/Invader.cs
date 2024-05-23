@@ -5,12 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Invader : MonoBehaviour
 {
-    public Sprite[] animationSprites = new Sprite[0];
-    public float animationTime = 1f;
-    public int score = 10;
-
+    public Sprite[] animationSprites;
+    public int score;
     private SpriteRenderer spriteRenderer;
     private int animationFrame;
+    private const float animationTime = 1f;
 
     private void Awake()
     {
@@ -25,13 +24,7 @@ public class Invader : MonoBehaviour
 
     private void AnimateSprite()
     {
-        animationFrame++;
-
-        // Loop back to the start if the animation frame exceeds the length
-        if (animationFrame >= animationSprites.Length) {
-            animationFrame = 0;
-        }
-
+        animationFrame = (animationFrame + 1) % animationSprites.Length;
         spriteRenderer.sprite = animationSprites[animationFrame];
     }
 
@@ -43,5 +36,4 @@ public class Invader : MonoBehaviour
             GameManager.Instance.OnBoundaryReached();
         }
     }
-
 }
