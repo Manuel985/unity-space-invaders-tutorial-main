@@ -5,8 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Invader : MonoBehaviour
 {
-    public Sprite[] animationSprites;
-    public int score;
+    [SerializeField]
+    private Sprite[] animationSprites;
+
+    internal int score;
+
     private SpriteRenderer spriteRenderer;
     private int animationFrame;
     private const float animationTime = 1f;
@@ -30,9 +33,12 @@ public class Invader : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Laser")) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Laser"))
+        {
             GameManager.Instance.OnInvaderKilled(this);
-        } else if (other.gameObject.layer == LayerMask.NameToLayer("Boundary")) {
+        }
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Boundary"))
+        {
             GameManager.Instance.OnBoundaryReached();
         }
     }

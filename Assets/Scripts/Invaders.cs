@@ -2,15 +2,25 @@ using UnityEngine;
 
 public class Invaders : MonoBehaviour
 {
-    public Invader[] prefabs;
-    public AnimationCurve speed;
-    public LayerMask playerAndBunkerLayer;
-    public Projectile missilePrefab;
+    [SerializeField]
+    private Invader[] prefabs;
+
+    [SerializeField]
+    private AnimationCurve speed;
+
+    [SerializeField]
+    private LayerMask playerAndBunkerLayer;
+
+    [SerializeField]
+    private Projectile missilePrefab;
+
     private Vector3 direction = Vector3.right;
     private Vector3 initialPosition;
     private const int rows = 5;
     private const int columns = 11;
+    private const int totalCount = rows * columns;
     private const float missileSpawnRate = 1f;
+    private const float offset = 1f;
     private Vector3 leftEdge;
     private Vector3 rightEdge;
     private Vector3 bottomEdge;
@@ -41,13 +51,18 @@ public class Invaders : MonoBehaviour
 
     private void Start()
     {
+        CameraBound();
+        InvokeRepeating(nameof(Shoot), missileSpawnRate, missileSpawnRate);
+    }
+
+    private void CameraBound()
+    {
         leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
         rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
         bottomEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z));
-        InvokeRepeating(nameof(MissileAttack), missileSpawnRate, missileSpawnRate);
     }
 
-    private void MissileAttack()
+    private void Shoot()
     {
         int amountAlive = GetAliveCount();
         foreach (Transform invader in transform)
@@ -68,7 +83,11 @@ public class Invaders : MonoBehaviour
 
     private void Update()
     {
-        int totalCount = rows * columns;
+        Move();
+    }
+
+    private void Move()
+    {
         int amountAlive = GetAliveCount();
         int amountKilled = totalCount - amountAlive;
         float percentKilled = (float)amountKilled / (float)totalCount;
@@ -80,8 +99,8 @@ public class Invaders : MonoBehaviour
             {
                 continue;
             }
-            if ((direction == Vector3.right && invader.position.x >= (rightEdge.x - 1f)) 
-                || (direction == Vector3.left && invader.position.x <= (leftEdge.x + 1f)))
+            if ((direction == Vector3.right && invader.position.x >= (rightEdge.x - offset))
+                || (direction == Vector3.left && invader.position.x <= (leftEdge.x + offset)))
             {
                 AdvanceRow();
                 break;
@@ -93,11 +112,11 @@ public class Invaders : MonoBehaviour
     {
         direction = new Vector3(-direction.x, 0f, 0f);
         Vector3 position = transform.position;
-        position.y -= 1f;
+        position.y -= offset;
         transform.position = position;
     }
 
-    public void ResetInvaders()
+    internal void ResetInvaders()
     {
         direction = Vector3.right;
         transform.position = initialPosition;
@@ -107,7 +126,7 @@ public class Invaders : MonoBehaviour
         }
     }
 
-    public int GetAliveCount()
+    internal int GetAliveCount()
     {
         int count = 0;
         foreach (Transform invader in transform)

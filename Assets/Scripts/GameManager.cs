@@ -5,18 +5,21 @@ public sealed class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private GameObject gameOverUI;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text livesText;
+    [SerializeField] 
+    private GameObject gameOverUI;
+
+    [SerializeField] 
+    private Text scoreText;
+
+    [SerializeField] 
+    private Text livesText;
 
     private Player player;
     private Invaders invaders;
     private MysteryShip mysteryShip;
     private Bunker[] bunkers;
-
     private int score;
     private int lives;
-
     public int Score => score;
     public int Lives => lives;
 
@@ -36,7 +39,6 @@ public sealed class GameManager : MonoBehaviour
         invaders = FindObjectOfType<Invaders>();
         mysteryShip = FindObjectOfType<MysteryShip>();
         bunkers = FindObjectsOfType<Bunker>();
-
         NewGame();
     }
 
@@ -50,7 +52,6 @@ public sealed class GameManager : MonoBehaviour
     private void NewGame()
     {
         gameOverUI.SetActive(false);
-
         SetScore(0);
         SetLives(3);
         NewRound();
@@ -60,11 +61,9 @@ public sealed class GameManager : MonoBehaviour
     {
         invaders.ResetInvaders();
         invaders.gameObject.SetActive(true);
-
         for (int i = 0; i < bunkers.Length; i++) {
             bunkers[i].ResetBunker();
         }
-
         Respawn();
     }
 
@@ -97,9 +96,7 @@ public sealed class GameManager : MonoBehaviour
     public void OnPlayerKilled(Player player)
     {
         SetLives(lives - 1);
-
         player.gameObject.SetActive(false);
-
         if (lives > 0) {
             Invoke(nameof(NewRound), 1f);
         } else {
@@ -110,9 +107,7 @@ public sealed class GameManager : MonoBehaviour
     public void OnInvaderKilled(Invader invader)
     {
         invader.gameObject.SetActive(false);
-
         SetScore(score + invader.score);
-
         if (invaders.GetAliveCount() == 0) {
             NewRound();
         }
@@ -128,9 +123,7 @@ public sealed class GameManager : MonoBehaviour
         if (invaders.gameObject.activeSelf)
         {
             invaders.gameObject.SetActive(false);
-
             OnPlayerKilled(player);
         }
     }
-
 }
