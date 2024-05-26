@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 4702280942715793727}
   - component: {fileID: 5198471656443246794}
   - component: {fileID: 499608721723870871}
-  - component: {fileID: 4661398929410899178}
-  - component: {fileID: -4564053433068293499}
-  m_Layer: 10
+  - component: {fileID: 8385904202476815608}
+  m_Layer: 15
   m_Name: LaserBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.125, y: 0.375}
   m_EdgeRadius: 0
---- !u!114 &4661398929410899178
+--- !u!114 &8385904202476815608
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,20 +168,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4198832206077850510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b02e3b611e0b54aaeaafe98c3a758e, type: 3}
+  m_Script: {fileID: 11500000, guid: 01e87d82a6fb09a4ea729cb358759f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 1, z: 0}
   speed: 50
---- !u!114 &-4564053433068293499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4198832206077850510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b26ad4ed6f110b49964d25365d73782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

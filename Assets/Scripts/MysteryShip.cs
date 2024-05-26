@@ -9,6 +9,9 @@ public class MysteryShip : MonoBehaviour
     [SerializeField]
     private GameObject powerUpPrefab;
 
+    [SerializeField]
+    private AudioClip explosion;
+
     private const float cycleTime = 30f;
     internal int score = 300;
     private Vector2 leftDestination;
@@ -95,8 +98,10 @@ public class MysteryShip : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Laser"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Laser")
+            || other.gameObject.layer == LayerMask.NameToLayer("LaserBeam"))
         {
+            GameManager.Instance.PlaySfx(explosion);
             Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
             Despawn();
             GameManager.Instance.OnMysteryShipKilled(this);

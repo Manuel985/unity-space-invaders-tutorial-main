@@ -8,7 +8,16 @@ public class Player : MonoBehaviour
     private Projectile laserPrefab;
 
     [SerializeField]
-    private GameObject laserBeamPrefab;
+    private Projectile laserBeamPrefab;
+
+    [SerializeField]
+    private AudioClip shooting;
+
+    [SerializeField]
+    private AudioClip powerUp;
+
+    [SerializeField]
+    private AudioClip explosion;
 
     private const float speed = 5f;
     private float minX, maxX;
@@ -51,15 +60,18 @@ public class Player : MonoBehaviour
         if (shootTimer > coolDownTime && (Input.GetKey(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             shootTimer = 0f;
+            Projectile projectile;
             if (hasLaserPowerUp)
             {
-                Instantiate(laserBeamPrefab, transform.position, Quaternion.identity);
+                projectile = laserBeamPrefab;
                 hasLaserPowerUp = false;
             }
             else
             {
-                Instantiate(laserPrefab, transform.position, Quaternion.identity);
+                projectile = laserPrefab;
             }
+            GameManager.Instance.PlaySfx(shooting);
+            Instantiate(projectile, transform.position, Quaternion.identity);
         }
     }
 
@@ -68,11 +80,13 @@ public class Player : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Missile") ||
             other.gameObject.layer == LayerMask.NameToLayer("Invader"))
         {
+            GameManager.Instance.PlaySfx(explosion);
             GameManager.Instance.OnPlayerKilled(this);
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("PowerUp"))
         {
             hasLaserPowerUp = true;
+            GameManager.Instance.PlaySfx(powerUp);
         }
     }
 }

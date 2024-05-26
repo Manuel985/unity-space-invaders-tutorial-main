@@ -3,9 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 
-public class LaserBeamCollision : MonoBehaviour
+public class LaserBeam : Projectile
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Boundary"))
         {

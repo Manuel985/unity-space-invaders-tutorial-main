@@ -4,7 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Bunker : MonoBehaviour
 {
-    public Texture2D splat;
+    [SerializeField]
+    private Texture2D splat;
+
     private Texture2D originalTexture;
     private SpriteRenderer spriteRenderer;
     private new BoxCollider2D collider;
@@ -17,7 +19,7 @@ public class Bunker : MonoBehaviour
         ResetBunker();
     }
 
-    public void ResetBunker()
+    internal void ResetBunker()
     {
         CopyTexture(originalTexture);
         gameObject.SetActive(true);
@@ -37,7 +39,7 @@ public class Bunker : MonoBehaviour
         spriteRenderer.sprite = sprite;
     }
 
-    public bool CheckCollision(BoxCollider2D other, Vector3 hitPoint)
+    internal bool CheckCollision(BoxCollider2D other, Vector3 hitPoint)
     {
         Vector2 offset = other.size / 2;
         return Splat(hitPoint) ||
@@ -49,7 +51,8 @@ public class Bunker : MonoBehaviour
 
     private bool Splat(Vector3 hitPoint)
     {
-        if (!CheckPoint(hitPoint, out int px, out int py)) {
+        if (!CheckPoint(hitPoint, out int px, out int py))
+        {
             return false;
         }
         Texture2D texture = spriteRenderer.sprite.texture;
@@ -85,7 +88,8 @@ public class Bunker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Invader")) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Invader"))
+        {
             gameObject.SetActive(false);
         }
     }

@@ -9,6 +9,9 @@ public class Invaders : MonoBehaviour
     private AnimationCurve speed;
 
     [SerializeField]
+    private AudioClip shooting;
+
+    [SerializeField]
     private LayerMask playerAndBunkerLayer;
 
     [SerializeField]
@@ -75,6 +78,7 @@ public class Invaders : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(invader.position, Vector2.down, raycastDistance, playerAndBunkerLayer);
             if (hit.collider != null && Random.value < (1f / amountAlive))
             {
+                GameManager.Instance.PlaySfx(shooting);
                 Instantiate(missilePrefab, invader.position, Quaternion.identity);
                 break;
             }

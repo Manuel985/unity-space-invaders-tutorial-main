@@ -12,4 +12,9 @@ public class Projectile : MonoBehaviour
     {
         transform.position += speed * Time.deltaTime * direction;
     }
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        Destroy(gameObject);
+    }
 }

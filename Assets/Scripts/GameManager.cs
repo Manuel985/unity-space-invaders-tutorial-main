@@ -3,16 +3,19 @@ using UnityEngine.UI;
 
 public sealed class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    internal static GameManager Instance { get; private set; }
 
-    [SerializeField] 
+    [SerializeField]
     private GameObject gameOverUI;
 
-    [SerializeField] 
+    [SerializeField]
     private Text scoreText;
 
-    [SerializeField] 
+    [SerializeField]
     private Text livesText;
+
+    [SerializeField]
+    private AudioSource sfx;
 
     private Player player;
     private Invaders invaders;
@@ -20,14 +23,18 @@ public sealed class GameManager : MonoBehaviour
     private Bunker[] bunkers;
     private int score;
     private int lives;
-    public int Score => score;
-    public int Lives => lives;
+    internal int Score => score;
+    internal int Lives => lives;
+    internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
     private void Awake()
     {
-        if (Instance != null) {
+        if (Instance != null)
+        {
             DestroyImmediate(gameObject);
-        } else {
+        }
+        else
+        {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -44,7 +51,8 @@ public sealed class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (lives <= 0 && Input.GetKeyDown(KeyCode.Return)) {
+        if (lives <= 0 && Input.GetKeyDown(KeyCode.Return))
+        {
             NewGame();
         }
     }
@@ -61,7 +69,8 @@ public sealed class GameManager : MonoBehaviour
     {
         invaders.ResetInvaders();
         invaders.gameObject.SetActive(true);
-        for (int i = 0; i < bunkers.Length; i++) {
+        for (int i = 0; i < bunkers.Length; i++)
+        {
             bunkers[i].ResetBunker();
         }
         Respawn();
@@ -93,32 +102,36 @@ public sealed class GameManager : MonoBehaviour
         livesText.text = this.lives.ToString();
     }
 
-    public void OnPlayerKilled(Player player)
+    internal void OnPlayerKilled(Player player)
     {
         SetLives(lives - 1);
         player.gameObject.SetActive(false);
-        if (lives > 0) {
+        if (lives > 0)
+        {
             Invoke(nameof(NewRound), 1f);
-        } else {
+        }
+        else
+        {
             GameOver();
         }
     }
 
-    public void OnInvaderKilled(Invader invader)
+    internal void OnInvaderKilled(Invader invader)
     {
         invader.gameObject.SetActive(false);
         SetScore(score + invader.score);
-        if (invaders.GetAliveCount() == 0) {
+        if (invaders.GetAliveCount() == 0)
+        {
             NewRound();
         }
     }
 
-    public void OnMysteryShipKilled(MysteryShip mysteryShip)
+    internal void OnMysteryShipKilled(MysteryShip mysteryShip)
     {
         SetScore(score + mysteryShip.score);
     }
 
-    public void OnBoundaryReached()
+    internal void OnBoundaryReached()
     {
         if (invaders.gameObject.activeSelf)
         {

@@ -8,6 +8,9 @@ public class Invader : MonoBehaviour
     [SerializeField]
     private Sprite[] animationSprites;
 
+    [SerializeField]
+    private AudioClip explosion;
+
     internal int score;
 
     private SpriteRenderer spriteRenderer;
@@ -33,8 +36,10 @@ public class Invader : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Laser"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Laser")
+            || other.gameObject.layer == LayerMask.NameToLayer("LaserBeam"))
         {
+            GameManager.Instance.PlaySfx(explosion);
             GameManager.Instance.OnInvaderKilled(this);
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("Boundary"))
