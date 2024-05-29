@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Invaders : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class Invaders : MonoBehaviour
     {
         CameraBound();
         InvokeRepeating(nameof(Shoot), missileSpawnRate, missileSpawnRate);
+        InvokeRepeating(nameof(HealInvaders), 0f, 5f);
     }
 
     private void CameraBound()
@@ -83,6 +85,69 @@ public class Invaders : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void HealInvaders()
+    {
+        int amountAlive = GetAliveCount();
+        if (amountAlive < 5)
+        {
+            return;
+        }
+
+        Transform[] activeInvaders = new Transform[amountAlive];
+        int index = 0;
+        foreach (Transform invader in transform)
+        {
+            if (invader.gameObject.activeInHierarchy)
+            {
+                activeInvaders[index++] = invader;
+            }
+        }
+
+        int randomIndex = Random.Range(0, amountAlive);
+        Transform randomInvader = activeInvaders[randomIndex];
+
+        // Colorare l'invasore selezionato di giallo
+        SpriteRenderer spriteRenderer = randomInvader.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.yellow;
+        }
+
+        StartCoroutine(ActivateAdjacentInvaders(randomInvader, 5f));
+    }
+
+    private IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (invader.gameObject.activeInHierarchy)
+        {
+            Vector3 invaderPosition = invader.localPosition;
+            Vector3[] adjacentOffsets = new Vector3[]
+            {
+            new Vector3(2f, 0f, 0f),   // Destra
+            new Vector3(-2f, 0f, 0f),  // Sinistra
+            new Vector3(0f, -2f, 0f)   // Sotto
+            };
+
+            foreach (Vector3 offset in adjacentOffsets)
+            {
+                Vector3 adjacentPosition = invaderPosition + offset;
+                foreach (Transform potentialInvader in transform)
+                {
+                    if (potentialInvader.localPosition == adjacentPosition && !potentialInvader.gameObject.activeSelf)
+                    {
+                        potentialInvader.gameObject.SetActive(true);
+                        break;
+                    }
+                }
+            }
+        }
+
+        SpriteRenderer spriteRenderer = invader.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = Color.white;
     }
 
     private void Update()
