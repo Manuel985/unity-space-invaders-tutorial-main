@@ -57,6 +57,7 @@ public class Invaders : MonoBehaviour
     {
         CameraBound();
         InvokeRepeating(nameof(Shoot), missileSpawnRate, missileSpawnRate);
+        InvokeRepeating(nameof(HealInvaders), 0f, 5f);
     }
 
     private void CameraBound()
