@@ -94,7 +94,6 @@ public class Invaders : MonoBehaviour
         {
             return;
         }
-
         Transform[] activeInvaders = new Transform[amountAlive];
         int index = 0;
         foreach (Transform invader in transform)
@@ -104,34 +103,28 @@ public class Invaders : MonoBehaviour
                 activeInvaders[index++] = invader;
             }
         }
-
         int randomIndex = Random.Range(0, amountAlive);
         Transform randomInvader = activeInvaders[randomIndex];
-
-        // Colorare l'invasore selezionato di giallo
         SpriteRenderer spriteRenderer = randomInvader.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
             spriteRenderer.color = Color.yellow;
         }
-
         StartCoroutine(ActivateAdjacentInvaders(randomInvader, 5f));
     }
 
     private IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
     {
         yield return new WaitForSeconds(delay);
-
         if (invader.gameObject.activeInHierarchy)
         {
             Vector3 invaderPosition = invader.localPosition;
             Vector3[] adjacentOffsets = new Vector3[]
             {
-            new Vector3(2f, 0f, 0f),   // Destra
-            new Vector3(-2f, 0f, 0f),  // Sinistra
-            new Vector3(0f, -2f, 0f)   // Sotto
+            new Vector3(2f, 0f, 0f),
+            new Vector3(-2f, 0f, 0f),
+            new Vector3(0f, -2f, 0f) 
             };
-
             foreach (Vector3 offset in adjacentOffsets)
             {
                 Vector3 adjacentPosition = invaderPosition + offset;
@@ -145,7 +138,6 @@ public class Invaders : MonoBehaviour
                 }
             }
         }
-
         SpriteRenderer spriteRenderer = invader.GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.white;
     }

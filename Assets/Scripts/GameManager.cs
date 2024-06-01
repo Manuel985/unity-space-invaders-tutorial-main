@@ -128,6 +128,7 @@ public sealed class GameManager : MonoBehaviour
 
     internal void OnMysteryShipKilled(MysteryShip mysteryShip)
     {
+        player.hasLaserPowerUp = true;
         SetScore(score + mysteryShip.score);
     }
 

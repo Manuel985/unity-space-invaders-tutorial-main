@@ -4,14 +4,9 @@ using UnityEngine;
 public class MysteryShip : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 5f;
+    private AudioClip powerUp;
 
-    [SerializeField]
-    private GameObject powerUpPrefab;
-
-    [SerializeField]
-    private AudioClip explosion;
-
+    private const float speed = 5;
     private const float cycleTime = 30f;
     internal int score = 300;
     private Vector2 leftDestination;
@@ -101,8 +96,7 @@ public class MysteryShip : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Laser")
             || other.gameObject.layer == LayerMask.NameToLayer("LaserBeam"))
         {
-            GameManager.Instance.PlaySfx(explosion);
-            Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+            GameManager.Instance.PlaySfx(powerUp);
             Despawn();
             GameManager.Instance.OnMysteryShipKilled(this);
         }
