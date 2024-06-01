@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8827057820756593673}
   - component: {fileID: 8827057820756593672}
   - component: {fileID: 8827057820756593671}
-  - component: {fileID: -3228964554232589908}
+  - component: {fileID: 1784857553527764584}
   m_Layer: 11
   m_Name: Missile
   m_TagString: Untagged
@@ -159,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.375, y: 0.75}
   m_EdgeRadius: 0
---- !u!114 &-3228964554232589908
+--- !u!114 &1784857553527764584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,9 +168,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8827057820756593669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790a6e3a904333d458ded5c1a51b9246, type: 3}
+  m_Script: {fileID: 11500000, guid: 59b02e3b611e0b54aaeaafe98c3a758e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: -1, z: 0}
   speed: 20
-  explosion: {fileID: 8300000, guid: 32cfea82824f13045877b24d7d50326a, type: 3}
+  boom: {fileID: 8300000, guid: 32cfea82824f13045877b24d7d50326a, type: 3}
