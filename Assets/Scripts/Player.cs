@@ -14,17 +14,15 @@ public class Player : MonoBehaviour
     private AudioClip shooting;
 
     [SerializeField]
-    private AudioClip powerUp;
+    private float speed;
 
     [SerializeField]
-    private AudioClip explosion;
+    private float coolDownTime;
 
-    private const float speed = 5f;
     private float minX, maxX;
     private const float offset = 0.85f;
     private float shootTimer;
-    private const float coolDownTime = 0.5f;
-    private bool hasLaserPowerUp = false;
+    internal bool hasLaserPowerUp = false;
 
     private void Start()
     {
@@ -80,13 +78,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Missile") ||
             other.gameObject.layer == LayerMask.NameToLayer("Invader"))
         {
-            GameManager.Instance.PlaySfx(explosion);
             GameManager.Instance.OnPlayerKilled(this);
-        }
-        if (other.gameObject.layer == LayerMask.NameToLayer("PowerUp"))
-        {
-            hasLaserPowerUp = true;
-            GameManager.Instance.PlaySfx(powerUp);
         }
     }
 }

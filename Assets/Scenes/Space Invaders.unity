@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -919,7 +920,7 @@ MonoBehaviour:
   playerAndBunkerLayer:
     serializedVersion: 2
     m_Bits: 8448
-  missilePrefab: {fileID: -3228964554232589908, guid: 3c328e673b90a7f418f1f1e66f83522b, type: 3}
+  missilePrefab: {fileID: 1784857553527764584, guid: 3c328e673b90a7f418f1f1e66f83522b, type: 3}
 --- !u!1 &1001845995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,9 +1163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4508da8755a834b85393bfa1b44963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  powerUpPrefab: {fileID: 5658909700007283971, guid: dad2da9f45849c942a30a6524d507b0c, type: 3}
-  explosion: {fileID: 8300000, guid: 32cfea82824f13045877b24d7d50326a, type: 3}
+  powerUp: {fileID: 8300000, guid: e2db900aa67a3e34891ab0cffd19e53e, type: 3}
 --- !u!61 &1154390493
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1785,11 +1784,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57279fa70d552234492ebb5dade22177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserPrefab: {fileID: 7857545474434196932, guid: 8cca1da190961a842b34231aade647ef, type: 3}
-  laserBeamPrefab: {fileID: 8385904202476815608, guid: 801e2a14895c56e41976238a30e94a73, type: 3}
+  laserPrefab: {fileID: 8462509925102267904, guid: 8cca1da190961a842b34231aade647ef, type: 3}
+  laserBeamPrefab: {fileID: 5348024927054436915, guid: 3a8a5183fdcb4c140a8b293c1d95d5ff, type: 3}
   shooting: {fileID: 8300000, guid: 593f7433e1f1bda409acf300bff89611, type: 3}
-  powerUp: {fileID: 8300000, guid: e2db900aa67a3e34891ab0cffd19e53e, type: 3}
-  explosion: {fileID: 8300000, guid: 32cfea82824f13045877b24d7d50326a, type: 3}
+  speed: 5
+  coolDownTime: 0.5
 --- !u!82 &1639391303
 AudioSource:
   m_ObjectHideFlags: 0
