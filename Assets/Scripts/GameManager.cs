@@ -25,6 +25,13 @@ public sealed class GameManager : MonoBehaviour
     private int lives;
     internal int Score => score;
     internal int Lives => lives;
+    private int playerConsecutiveKills;
+    private const int combo = 3;
+    private const int minSpeedPlayer = 8;
+    private const int maxSpeedPlayer = 12;
+    private const float maxCoolDownPlayer = 0.6f;
+    private const float minCoolDownPlayer = 0.2f;
+
     internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
     private const float changePlayerSpeed = 2f;
@@ -71,6 +78,8 @@ public sealed class GameManager : MonoBehaviour
 
     private void NewRound()
     {
+        player.speed = minSpeedPlayer;
+        player.coolDownTime = maxCoolDownPlayer;
         invaders.ResetInvaders();
         invaders.gameObject.SetActive(true);
         for (int i = 0; i < bunkers.Length; i++)
@@ -126,14 +135,12 @@ public sealed class GameManager : MonoBehaviour
     {
         invader.gameObject.SetActive(false);
         SetScore(score + invader.score);
-
-        countKilledInvaderInARow++;
-        countKilledInvaderInARow %= 5;
-        if (countKilledInvaderInARow == 0 && ((player.Speed + changePlayerSpeed) < 18))
+        playerConsecutiveKills++;
+        if (playerConsecutiveKills == combo)
         {
-            player.Speed += changePlayerSpeed;
-        }
-
+            playerConsecutiveKills = 0;
+            Combo();
+        }    
         if (invaders.GetAliveCount() == 0)
         {
             NewRound();
@@ -155,24 +162,20 @@ public sealed class GameManager : MonoBehaviour
         }
     }
 
-    internal void OnProjectileMissEnemy()
+    internal void PlayerMissInvaders()
     {
-        countKilledInvaderInARow = 0;
-        if ((player.Speed - (2 * changePlayerSpeed)) > 5f)
-        {
-            player.Speed -= (2 * changePlayerSpeed);
-        }
-        else
-        {
-            player.Speed = 5f;
-        }
+        playerConsecutiveKills = 0;
+        if (player.speed > minSpeedPlayer)
+            player.speed--;
+        if (player.coolDownTime < maxCoolDownPlayer)
+            player.coolDownTime += 0.1f;
     }
 
-    internal void OnHealerInvaderKilled()
+    private void Combo()
     {
-        if ((player.Speed + changePlayerSpeed) < 18)
-        {
-            player.Speed += changePlayerSpeed;
-        }
+        if (player.speed < maxSpeedPlayer)
+            player.speed++;
+        if (player.coolDownTime > minCoolDownPlayer)
+            player.coolDownTime-=0.1f;
     }
 }

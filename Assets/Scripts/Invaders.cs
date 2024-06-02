@@ -113,7 +113,7 @@ public class Invaders : MonoBehaviour
         StartCoroutine(ActivateAdjacentInvaders(randomInvader, 8f));
     }
 
-    private IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
+    internal IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (invader.gameObject.activeInHierarchy)
