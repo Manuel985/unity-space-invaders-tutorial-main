@@ -27,6 +27,10 @@ public sealed class GameManager : MonoBehaviour
     internal int Lives => lives;
     internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
+    private const float changePlayerSpeed = 2f;
+    private int countKilledInvaderInARow = 0;
+
+
     private void Awake()
     {
         if (Instance != null)
@@ -82,6 +86,8 @@ public sealed class GameManager : MonoBehaviour
         position.x = 0f;
         player.transform.position = position;
         player.gameObject.SetActive(true);
+        countKilledInvaderInARow = 0;
+        player.Speed = 5f;
     }
 
     private void GameOver()
@@ -120,6 +126,14 @@ public sealed class GameManager : MonoBehaviour
     {
         invader.gameObject.SetActive(false);
         SetScore(score + invader.score);
+
+        countKilledInvaderInARow++;
+        countKilledInvaderInARow %= 5;
+        if (countKilledInvaderInARow == 0 && ((player.Speed + changePlayerSpeed) < 18))
+        {
+            player.Speed += changePlayerSpeed;
+        }
+
         if (invaders.GetAliveCount() == 0)
         {
             NewRound();
@@ -138,6 +152,27 @@ public sealed class GameManager : MonoBehaviour
         {
             invaders.gameObject.SetActive(false);
             OnPlayerKilled(player);
+        }
+    }
+
+    internal void OnProjectileMissEnemy()
+    {
+        countKilledInvaderInARow = 0;
+        if ((player.Speed - (2 * changePlayerSpeed)) > 5f)
+        {
+            player.Speed -= (2 * changePlayerSpeed);
+        }
+        else
+        {
+            player.Speed = 5f;
+        }
+    }
+
+    internal void OnHealerInvaderKilled()
+    {
+        if ((player.Speed + changePlayerSpeed) < 18)
+        {
+            player.Speed += changePlayerSpeed;
         }
     }
 }

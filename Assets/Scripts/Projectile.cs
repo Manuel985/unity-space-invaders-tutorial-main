@@ -1,47 +1,19 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
-public class Projectile : MonoBehaviour
+public class Projectile : ArtilleryObject
 {
-    [SerializeField]
-    private Vector3 direction;
-
-    [SerializeField]
-    private float speed;
-
-    [SerializeField]
-    protected AudioClip boom;
-
-    private new BoxCollider2D collider;
-
-    private void Awake()
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
-        collider = GetComponent<BoxCollider2D>();
+        CheckEnemyMiss(other);
+        base.OnTriggerEnter2D(other); // Call the base class method
     }
 
-    private void Update()
+    protected void CheckEnemyMiss(Collider2D other)
     {
-        transform.position += speed * Time.deltaTime * direction;
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        CheckCollision(other);
-    }
-
-    protected virtual void OnTriggerStay2D(Collider2D other)
-    {
-        CheckCollision(other);
-    }
-
-    private void CheckCollision(Collider2D other)
-    {
-        Bunker bunker = other.gameObject.GetComponent<Bunker>();
-        if (bunker == null || bunker.CheckCollision(collider, transform.position))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Boundary") ||
+            other.gameObject.layer == LayerMask.NameToLayer("Bunker"))
         {
-            GameManager.Instance.PlaySfx(boom);
-            Destroy(gameObject);
+            GameManager.Instance.OnProjectileMissEnemy();
         }
     }
 }

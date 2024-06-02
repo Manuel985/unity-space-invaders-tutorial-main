@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float speed;
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
 
     [SerializeField]
     private float coolDownTime;
