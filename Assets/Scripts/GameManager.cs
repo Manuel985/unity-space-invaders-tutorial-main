@@ -34,6 +34,10 @@ public sealed class GameManager : MonoBehaviour
 
     internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
+    private const float changePlayerSpeed = 2f;
+    private int countKilledInvaderInARow = 0;
+
+
     private void Awake()
     {
         if (Instance != null)
@@ -91,6 +95,8 @@ public sealed class GameManager : MonoBehaviour
         position.x = 0f;
         player.transform.position = position;
         player.gameObject.SetActive(true);
+        countKilledInvaderInARow = 0;
+        player.Speed = 5f;
     }
 
     private void GameOver()

@@ -16,7 +16,7 @@ public class Invaders : MonoBehaviour
     private LayerMask playerAndBunkerLayer;
 
     [SerializeField]
-    private Projectile missilePrefab;
+    private Missile missilePrefab;
 
     private Vector3 direction = Vector3.right;
     private Vector3 initialPosition;
@@ -138,6 +138,11 @@ public class Invaders : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            GameManager.Instance.OnHealerInvaderKilled();
+        }
+
         SpriteRenderer spriteRenderer = invader.GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.white;
     }
