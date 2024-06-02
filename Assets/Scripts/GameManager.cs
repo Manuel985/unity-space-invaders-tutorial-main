@@ -25,6 +25,13 @@ public sealed class GameManager : MonoBehaviour
     private int lives;
     internal int Score => score;
     internal int Lives => lives;
+    private int playerConsecutiveKills;
+    private const int combo = 3;
+    private const int minSpeedPlayer = 8;
+    private const int maxSpeedPlayer = 12;
+    private const float maxCoolDownPlayer = 0.6f;
+    private const float minCoolDownPlayer = 0.2f;
+
     internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
     private void Awake()
@@ -67,6 +74,8 @@ public sealed class GameManager : MonoBehaviour
 
     private void NewRound()
     {
+        player.speed = minSpeedPlayer;
+        player.coolDownTime = maxCoolDownPlayer;
         invaders.ResetInvaders();
         invaders.gameObject.SetActive(true);
         for (int i = 0; i < bunkers.Length; i++)
@@ -120,6 +129,12 @@ public sealed class GameManager : MonoBehaviour
     {
         invader.gameObject.SetActive(false);
         SetScore(score + invader.score);
+        playerConsecutiveKills++;
+        if (playerConsecutiveKills == combo)
+        {
+            playerConsecutiveKills = 0;
+            Combo();
+        }    
         if (invaders.GetAliveCount() == 0)
         {
             NewRound();
@@ -139,5 +154,22 @@ public sealed class GameManager : MonoBehaviour
             invaders.gameObject.SetActive(false);
             OnPlayerKilled(player);
         }
+    }
+
+    internal void PlayerMissInvaders()
+    {
+        playerConsecutiveKills = 0;
+        if (player.speed > minSpeedPlayer)
+            player.speed--;
+        if (player.coolDownTime < maxCoolDownPlayer)
+            player.coolDownTime += 0.1f;
+    }
+
+    private void Combo()
+    {
+        if (player.speed < maxSpeedPlayer)
+            player.speed++;
+        if (player.coolDownTime > minCoolDownPlayer)
+            player.coolDownTime-=0.1f;
     }
 }

@@ -1784,11 +1784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57279fa70d552234492ebb5dade22177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserPrefab: {fileID: 8462509925102267904, guid: 8cca1da190961a842b34231aade647ef, type: 3}
+  laserPrefab: {fileID: 2289027745969498223, guid: 8cca1da190961a842b34231aade647ef, type: 3}
   laserBeamPrefab: {fileID: 5348024927054436915, guid: 3a8a5183fdcb4c140a8b293c1d95d5ff, type: 3}
   shooting: {fileID: 8300000, guid: 593f7433e1f1bda409acf300bff89611, type: 3}
-  speed: 5
-  coolDownTime: 0.5
 --- !u!82 &1639391303
 AudioSource:
   m_ObjectHideFlags: 0

@@ -13,12 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip shooting;
 
-    [SerializeField]
-    private float speed;
-
-    [SerializeField]
-    private float coolDownTime;
-
+    internal float speed;
+    internal float coolDownTime;
     private float minX, maxX;
     private const float offset = 0.85f;
     private float shootTimer;

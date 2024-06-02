@@ -57,7 +57,7 @@ public class Invaders : MonoBehaviour
     {
         CameraBound();
         InvokeRepeating(nameof(Shoot), missileSpawnRate, missileSpawnRate);
-        InvokeRepeating(nameof(HealInvaders), 0f, 5f);
+        InvokeRepeating(nameof(HealInvaders), 0f, 8f);
     }
 
     private void CameraBound()
@@ -110,10 +110,10 @@ public class Invaders : MonoBehaviour
         {
             spriteRenderer.color = Color.yellow;
         }
-        StartCoroutine(ActivateAdjacentInvaders(randomInvader, 5f));
+        StartCoroutine(ActivateAdjacentInvaders(randomInvader, 8f));
     }
 
-    private IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
+    internal IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (invader.gameObject.activeInHierarchy)
