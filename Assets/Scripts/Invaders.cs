@@ -16,7 +16,7 @@ public class Invaders : MonoBehaviour
     private LayerMask playerAndBunkerLayer;
 
     [SerializeField]
-    private Projectile missilePrefab;
+    private Missile missilePrefab;
 
     private Vector3 direction = Vector3.right;
     private Vector3 initialPosition;
@@ -57,7 +57,7 @@ public class Invaders : MonoBehaviour
     {
         CameraBound();
         InvokeRepeating(nameof(Shoot), missileSpawnRate, missileSpawnRate);
-        InvokeRepeating(nameof(HealInvaders), 0f, 5f);
+        InvokeRepeating(nameof(HealInvaders), 0f, 8f);
     }
 
     private void CameraBound()
@@ -110,7 +110,7 @@ public class Invaders : MonoBehaviour
         {
             spriteRenderer.color = Color.yellow;
         }
-        StartCoroutine(ActivateAdjacentInvaders(randomInvader, 5f));
+        StartCoroutine(ActivateAdjacentInvaders(randomInvader, 8f));
     }
 
     private IEnumerator ActivateAdjacentInvaders(Transform invader, float delay)
@@ -138,6 +138,11 @@ public class Invaders : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            GameManager.Instance.OnHealerInvaderKilled();
+        }
+
         SpriteRenderer spriteRenderer = invader.GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.white;
     }
